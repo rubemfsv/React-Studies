@@ -3,15 +3,15 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 
 class Dishdetail extends Component {
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			showDish: null
-		};
+	componentDidMount() {
+		console.log('component did mount')
 	}
 
-	renderSelectedDish(selectedDish) {
+	componentDidUpdate() {
+		console.log('component did update')
+	}
+
+	renderDish(selectedDish) {
 
 		console.log(this.props)
 
@@ -26,6 +26,7 @@ class Dishdetail extends Component {
 			});
 
 			return (
+
 				<div className="row">
 					<div className="col-12 col-md-5 m-1">
 						<Card>
@@ -58,10 +59,35 @@ class Dishdetail extends Component {
 
 		return (
 			<div className="container">
-				{this.renderSelectedDish(showDish)}
+				{this.renderDish(showDish)}
 			</div>
 		);
 	}
 }
 
 export default Dishdetail;
+
+// import React from 'react';
+// import { Card, CardImg, CardText, CardBody,
+//     CardTitle } from 'reactstrap';
+
+
+//     function RenderDish({dish}) {
+    
+//       . . .
+
+//     }
+
+//     function RenderComments({comments}) {
+      
+//       . . .
+      
+//     }
+
+//     const  DishDetail = (props) => {
+
+//       . . .
+      
+//     }
+
+// export default DishDetail;

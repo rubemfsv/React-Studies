@@ -13,14 +13,14 @@ class Dishdetail extends Component {
 
 	renderSelectedDish(selectedDish) {
 
-		console.log(selectedDish)
+		console.log(this.props)
 
 		if (selectedDish != null) {
 			const comments = selectedDish.comments.map((comment) => {
 				return (
 					<div key={comment.id}>
-						{comment.comment} <br /> <br />
-						{comment.author}, {comment.date} <br /> <br />
+						<p> {comment.comment} </p>
+						<p>{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
 					</div>
 				);
 			});
@@ -54,7 +54,7 @@ class Dishdetail extends Component {
 
 	render() {
 
-		const showDish = this.props.selectedDish;
+		const showDish = this.props.dish;
 
 		return (
 			<div className="container">

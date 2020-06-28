@@ -60,21 +60,21 @@ class CommentForm extends Component {
 								<Label htmlFor="author" >Your Name</Label>
 								<Control.text model=".author" id="author" name="author"
 									placeholder="Your Name"
-									className="form-control" 
+									className="form-control"
 									validators={{
 										required, minLength: minLength(3), maxLength: maxLength(15)
 									}}
-									/>
-									<Errors 
-										className="text-danger"
-										model=".author"
-										show="touched"
-										messages={{
-											required: 'Required, ',
-											minLength: 'Must be greater than 2 characters',
-											maxLength: 'Must be 15 characters or less'
-										}}
-									/>
+								/>
+								<Errors
+									className="text-danger"
+									model=".author"
+									show="touched"
+									messages={{
+										required: 'Required, ',
+										minLength: 'Must be greater than 2 characters',
+										maxLength: 'Must be 15 characters or less'
+									}}
+								/>
 							</Row>
 							<Row className="form-group">
 								<Label htmlFor="comment">Comment</Label>
@@ -104,26 +104,33 @@ function RenderDish({ dish }) {
 	);
 }
 
-function RenderComments({ comment }) {
-	return (
-		<div>
-			<p> {comment.comment} </p>
-			<p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
-		</div>
-	);
+function RenderComments({ comments }) {
+	if (comments != null) {
+		return (
+			<>
+				<h2>Comments</h2>
+				{comments.map(comment => {
+					return (
+						<div key={comment.id}>
+							<p> {comment.comment} </p>
+							<p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
+						</div>
+					);
+				})}
+				<CommentForm />
+			</>
+		);
+	} else {
+		return(
+			<div></div>
+		);
+	}
 }
 
 const DishDetail = (props) => {
 
 	const dish = props.dish;
-
-	const comments = props.comments.map((comment) => {
-		return (
-			<div key={comment.id}>
-				<RenderComments comment={comment} />
-			</div>
-		);
-	});
+	const comments = props.comments;
 
 	console.log(props)
 
@@ -143,9 +150,7 @@ const DishDetail = (props) => {
 						<RenderDish dish={dish} />
 					</div>
 					<div className="col-12 col-md-5 m-1">
-						<h2>Comments</h2>
-						{comments}
-						<CommentForm />
+						<RenderComments comments={comments} />
 					</div>
 				</div>
 			</div>

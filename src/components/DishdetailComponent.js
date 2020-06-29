@@ -8,6 +8,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -96,31 +97,39 @@ class CommentForm extends Component {
 
 function RenderDish({ dish }) {
 	return (
-		<Card>
-			<CardImg top src={baseUrl + dish.image} alt={dish.name} />
-			<CardBody>
-				<CardTitle>{dish.name}</CardTitle>
-				<CardText>{dish.description}</CardText>
-			</CardBody>
-		</Card>
+		<FadeTransform
+			in
+			transformProps={{
+				exitTransform: 'scale(0.5) translateY(-50%)'
+			}}>
+			<Card>
+				<CardImg top src={baseUrl + dish.image} alt={dish.name} />
+				<CardBody>
+					<CardTitle>{dish.name}</CardTitle>
+					<CardText>{dish.description}</CardText>
+				</CardBody>
+			</Card>
+		</FadeTransform>
 	);
 }
 
 function RenderComments({ comments, postComment, dishId }) {
 	if (comments != null) {
 		return (
-			<>
+			<Stagger in>
 				<h2>Comments</h2>
 				{comments.map(comment => {
 					return (
-						<div key={comment.id}>
-							<p> {comment.comment} </p>
-							<p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
-						</div>
+						<Fade in>
+							<div key={comment.id}>
+								<p> {comment.comment} </p>
+								<p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
+							</div>
+						</Fade>
 					);
 				})}
 				<CommentForm dishId={dishId} postComment={postComment} />
-			</>
+			</Stagger>
 		);
 	} else {
 		return (

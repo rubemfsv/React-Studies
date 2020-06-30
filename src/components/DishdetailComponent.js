@@ -120,7 +120,7 @@ function RenderComments({ comments, postComment, dishId }) {
 				<h2>Comments</h2>
 				{comments.map(comment => {
 					return (
-						<Fade in>
+						<Fade in >
 							<div key={comment.id}>
 								<p> {comment.comment} </p>
 								<p> -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}	</p>
